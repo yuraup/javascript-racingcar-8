@@ -53,8 +53,8 @@
          ```js
             //예시
             실행 결과
-            pobi : --
-            woni : ---
+            pobi : -
+            woni : 
             jun : -
          ```
 
