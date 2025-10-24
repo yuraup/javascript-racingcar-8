@@ -1,5 +1,6 @@
 import { scanCarNames, scanTryCounts } from './utils/io.js';
-import { parseCarNames } from './utils/parse.js';
+import { parseCarNames, parseTryCounts } from './utils/parse.js';
+import { validateTryCounts } from './utils/validate.js';
 
 class App {
   async run() {
@@ -7,6 +8,8 @@ class App {
     const parsedCarNames = parseCarNames(carNamesInput);
 
     const tryCountsInput = await scanTryCounts();
+    const parsedTryCounts = parseTryCounts(tryCountsInput);
+    validateTryCounts(parsedTryCounts);
   }
 }
 

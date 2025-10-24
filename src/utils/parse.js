@@ -12,3 +12,11 @@ export const parseCarNames = (carNamesInput) => {
 
   return parsedCarNames;
 };
+
+export const parseTryCounts = (tryCountsInput) => {
+  const trimmed = tryCountsInput.trim();
+  if (!/^\d+$/.test(trimmed))
+    throwError('시도 횟수는 1 이상의 정수여야 합니다.');
+
+  return Number(trimmed);
+};
