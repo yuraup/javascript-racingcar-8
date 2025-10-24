@@ -14,4 +14,10 @@ export default class Round {
       }
     });
   }
+
+  formatResult() {
+    return this.cars.map(
+      (car) => `${car.getName()} : ${'-'.repeat(car.getPosition())}`,
+    );
+  }
 }
