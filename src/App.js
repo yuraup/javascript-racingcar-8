@@ -15,16 +15,25 @@ class App {
     validateTryCounts(parsedTryCounts);
 
     const cars = parsedCarNames.map((car) => new Car(car));
-    this.runSingleRound(cars);
+    this.runAllRounds(cars, parsedTryCounts);
+  }
+
+  runAllRounds(cars, parsedTryCounts, onRoundEnd = () => {}) {
+    Console.print('\n실행 결과');
+
+    for (let i = 0; i < parsedTryCounts; i += 1) {
+      const signleResult = this.runSingleRound(cars);
+      onRoundEnd(signleResult, i);
+      Console.print(signleResult);
+      Console.print('');
+    }
   }
 
   runSingleRound(cars) {
-    Console.print('\n실행 결과');
     const round = new Round(cars);
     round.run();
 
-    const result = round.formatResult().join('\n');
-    Console.print(result);
+    return round.formatResult().join('\n');
   }
 }
 
