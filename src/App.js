@@ -4,6 +4,8 @@ import Round from './domain/Round.js';
 import { scanCarNames, scanTryCounts } from './utils/io.js';
 import { parseCarNames, parseTryCounts } from './utils/parse.js';
 import { validateTryCounts } from './utils/validate.js';
+import { getWinnerNames } from './utils/winner.js';
+import { formatWinners } from './utils/format.js';
 
 class App {
   async run() {
@@ -16,6 +18,9 @@ class App {
 
     const cars = parsedCarNames.map((car) => new Car(car));
     this.runAllRounds(cars, parsedTryCounts);
+
+    const winners = getWinnerNames(cars);
+    Console.print(formatWinners(winners));
   }
 
   runAllRounds(cars, parsedTryCounts, onRoundEnd = () => {}) {
