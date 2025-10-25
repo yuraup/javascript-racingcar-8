@@ -1,5 +1,6 @@
 import Car from './domain/Car.js';
 import Round from './domain/Round.js';
+
 import {
   scanCarNames,
   scanTryCounts,
@@ -13,25 +14,26 @@ import { formatRoundResult, formatWinners, joinLines } from './utils/format.js';
 
 class App {
   async run() {
+    const { cars, parsedTryCounts } = await this.prepareGame();
+    this.runAllRounds(cars, parsedTryCounts);
+    this.printWinners(cars);
+  }
+
+  async prepareGame() {
     const carNamesInput = await scanCarNames();
-    const parsedCarNames = parseCarNames(carNamesInput);
     const tryCountsInput = await scanTryCounts();
+
+    const parsedCarNames = parseCarNames(carNamesInput);
     const parsedTryCounts = parseTryCounts(tryCountsInput);
     validateTryCounts(parsedTryCounts);
 
     const cars = parsedCarNames.map((car) => new Car(car));
-    this.runAllRounds(cars, parsedTryCounts);
-
-    const winners = getWinnerNames(cars);
-    printLine(formatWinners(winners));
+    return { cars, parsedTryCounts };
   }
 
-  runSingleRound(cars) {
-    const round = new Round(cars);
-    round.run();
-
-    const singleRound = formatRoundResult(round.getCars());
-    return joinLines(singleRound);
+  printWinners(cars) {
+    const winners = getWinnerNames(cars);
+    printLine(formatWinners(winners));
   }
 
   runAllRounds(cars, parsedTryCounts, onRoundEnd = () => {}) {
@@ -43,6 +45,14 @@ class App {
       printLine(singleResult);
       printEmptyLine();
     }
+  }
+
+  runSingleRound(cars) {
+    const round = new Round(cars);
+    round.run();
+
+    const singleRound = formatRoundResult(round.getCars());
+    return joinLines(singleRound);
   }
 }
 
