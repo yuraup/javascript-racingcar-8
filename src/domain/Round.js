@@ -1,4 +1,4 @@
-import { generateRandomNumber, isOverFour } from '../utils/randomNumber.js';
+import { generateRandomNumber, canMoveForward } from '../utils/randomNumber.js';
 
 export default class Round {
   constructor(cars) {
@@ -9,7 +9,7 @@ export default class Round {
     this.cars.forEach((car) => {
       const randomNumber = generateRandomNumber();
 
-      if (isOverFour(randomNumber)) {
+      if (canMoveForward(randomNumber)) {
         car.move();
       }
     });
