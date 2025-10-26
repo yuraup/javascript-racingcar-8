@@ -8,15 +8,19 @@ import {
   printEmptyLine,
 } from './utils/io.js';
 import { parseCarNames, parseTryCount } from './utils/parse.js';
-import { validateTryCount } from './utils/validate.js';
 import { getWinnerNames } from './utils/winner.js';
 import { formatRoundResult, formatWinners, joinLines } from './utils/format.js';
 
 class App {
   async run() {
-    const { cars, tryCounts } = await this.prepareGame();
-    this.runAllRounds(cars, tryCounts);
-    this.printWinners(cars);
+    try {
+      const { cars, tryCounts } = await this.prepareGame();
+      this.runAllRounds(cars, tryCounts);
+      this.printWinners(cars);
+    } catch (error) {
+      printLine(error.message);
+      throw error;
+    }
   }
 
   async prepareGame() {
@@ -25,7 +29,6 @@ class App {
 
     const carNames = parseCarNames(carNamesInput);
     const tryCounts = parseTryCount(tryCountInput);
-    validateTryCount(tryCounts);
 
     const cars = carNames.map((car) => new Car(car));
     return { cars, tryCounts };
