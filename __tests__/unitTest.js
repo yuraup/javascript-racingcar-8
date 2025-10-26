@@ -1,5 +1,16 @@
 import { getWinnerNames } from '../src/utils/winner';
+import { canMoveForward } from '../src/utils/randomNumber.js';
 import Car from '../src/domain/Car.js';
+
+describe('전진 조건 검사', () => {
+  test.each([
+    [3, false],
+    [4, true],
+    [9, true],
+  ])('입력값 %s일 때 %s를 반환한다', (input, expected) => {
+    expect(canMoveForward(input)).toBe(expected);
+  });
+});
 
 describe('우승자 계산', () => {
   test('가장 많이 이동한 자동차 반환', () => {
